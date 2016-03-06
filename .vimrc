@@ -52,6 +52,14 @@ set hlsearch
 syntax on
 
 set mouse=a
+set expandtab
+set smarttab
+set shiftwidth=4
+set tabstop=4
+
+set lbr
+set tw=500
+
 
 " ----- Plugin-Specific Settings --------------------------------------
 
