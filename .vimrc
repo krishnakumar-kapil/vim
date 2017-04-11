@@ -69,6 +69,18 @@ set lbr
 set tw=500
 
 set autoread
+set pastetoggle=<F3>
+
+" allows undo after file close
+set undofile
+
+:command WQ wq
+:command Wq wq
+:command W w
+:command Q q
+
+" redraw screen and remove highlighting
+nnoremap <silent> <C-l> :nohl<CR><C-l>
 " ----- Plugin-Specific Settings --------------------------------------
 
 " ---- Airline themes
