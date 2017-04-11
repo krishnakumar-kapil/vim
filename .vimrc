@@ -34,6 +34,9 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'Raimondi/delimitMate'
 Plugin 'christoomey/vim-tmux-navigator'
 
+" Multiple Cursor
+" Plugin 'terryma/vim-multiple-cursors'
+
 
 " ----- Syntax plugins ------------------------------------------------
 Plugin 'jez/vim-c0'
@@ -84,7 +87,7 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 " ----- Plugin-Specific Settings --------------------------------------
 
 " ---- Airline themes
-let g:airline_theme='dark'
+let g:airline_theme='badwolf'
 "let g:airline_theme='powerlineish'
 " ----- altercation/vim-colors-solarized settings -----
 " Toggle this to "light" for light colorscheme
