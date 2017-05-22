@@ -69,10 +69,11 @@ set shiftwidth=4
 set tabstop=4
 
 set lbr
-set tw=500
+" set tw=500
 
 set autoread
 set pastetoggle=<F3>
+set noeol
 
 " allows undo after file close
 set undofile
@@ -129,8 +130,8 @@ let NERDTreeIgnore = ['\.pyc$', 'build', 'venv', 'egg', 'egg-info/', 'docs', '\.
 " ----- scrooloose/syntastic settings -----
 let g:syntastic_error_symbol = '✘'
 let g:syntastic_warning_symbol = "▲"
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 augroup mySyntastic
