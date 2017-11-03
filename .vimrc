@@ -27,7 +27,7 @@ Plugin 'dyng/ctrlsf.vim'
 Plugin 'vim-scripts/a.vim'
 " Plugin 'taglist.vim'
 Plugin 'fatih/vim-go'
-Plugin 'davidhalter/jedi-vim'
+" Plugin 'davidhalter/jedi-vim'
 
 " ----- Working with Git ----------------------------------------------
 Plugin 'airblade/vim-gitgutter'
@@ -55,6 +55,7 @@ filetype plugin indent on
 
 
 " --- General settings ---
+set clipboard=unnamed
 set backspace=indent,eol,start
 set ruler
 set number
@@ -261,5 +262,4 @@ let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
 let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
-
 
