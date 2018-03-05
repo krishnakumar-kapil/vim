@@ -267,9 +267,6 @@ let g:NERDCompactSexyComs = 1
 let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
-
 " ---- Jedi Vim
 let g:jedi#use_splits_not_buffers = "top"
 let g:jedi#popup_on_dot = 0
-
-
