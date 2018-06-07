@@ -37,6 +37,8 @@ Plugin 'tpope/vim-fugitive'
 " ----- Other text editing features -----------------------------------
 Plugin 'Raimondi/delimitMate'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'reedes/vim-pencil'
+Plugin 'junegunn/goyo.vim'
 
 " Multiple Cursor
 " Plugin 'terryma/vim-multiple-cursors'
@@ -270,3 +272,18 @@ let g:NERDTrimTrailingWhitespace = 1
 " ---- Jedi Vim
 let g:jedi#use_splits_not_buffers = "top"
 let g:jedi#popup_on_dot = 0
+
+" ---- vim-pencil
+"  Pencil has :HardPencil and :SoftPencil
+"  SoftPencil is what you want when in markdown without the crappy splits 
+"  and also has nice jumping between lines
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+augroup END
+
+" ---- Goyo
+"  Activate full screen writing mode toggleable with :Goyo
+
+
