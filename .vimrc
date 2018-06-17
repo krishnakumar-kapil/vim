@@ -10,7 +10,6 @@ Plugin 'gmarik/Vundle.vim'
 
 " ----- Making Vim look good ------------------------------------------
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'tomasr/molokai'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
@@ -18,16 +17,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
-Plugin 'majutsushi/tagbar'
-Plugin 'kien/ctrlp.vim'
-Plugin 'dyng/ctrlsf.vim'
-Plugin 'vim-scripts/a.vim'
-" Plugin 'taglist.vim'
-Plugin 'fatih/vim-go'
-Plugin 'davidhalter/jedi-vim'
+" rename file name using :rename {newname}
 Plugin 'danro/rename.vim'
 
 " ----- Working with Git ----------------------------------------------
@@ -36,21 +26,41 @@ Plugin 'tpope/vim-fugitive'
 
 " ----- Other text editing features -----------------------------------
 Plugin 'Raimondi/delimitMate'
+Plugin 'tpope/vim-surround'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'godlygeek/tabular'
+
+" ----- Tags ---------
+Plugin 'xolox/vim-easytags'
+Plugin 'xolox/vim-misc'
+Plugin 'majutsushi/tagbar'
+
+" ----- Searching ----
+Plugin 'kien/ctrlp.vim'
+Plugin 'dyng/ctrlsf.vim'
+
+" ----- Language Plugins ----
+Plugin 'fatih/vim-go'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'chrisbra/csv.vim'
+Plugin 'pangloss/vim-javascript'
+
+" ----- Writing -------------
 Plugin 'reedes/vim-pencil'
 Plugin 'junegunn/goyo.vim'
+Plugin 'junegunn/limelight.vim'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'dkarter/bullets.vim'
 
 " Multiple Cursor
 " Plugin 'terryma/vim-multiple-cursors'
 
-
 " ----- Syntax plugins ------------------------------------------------
-Plugin 'jez/vim-c0'
-Plugin 'jez/vim-ispc'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'dkarter/bullets.vim'
+Plugin 'vim-syntastic/syntastic'
+
+" --- Miscellaneous Plugins ----
+" for switching between foo.c and foo.h or alternate files
+Plugin 'vim-scripts/a.vim'
 
 call vundle#end()
 
@@ -82,7 +92,7 @@ set tw=500
 set cc=80
 
 set autoread
-set pastetoggle=<F3>
+set pastetoggle=<leader>p
 
 " allows undo after file close
 set undofile
@@ -109,7 +119,6 @@ set background=dark
 " Set the colorscheme
 colorscheme solarized
 
-
 " ----- bling/vim-airline settings -----
 " Always show statusbar
 set laststatus=2
@@ -127,6 +136,11 @@ let g:airline_detect_paste=1
 " Show airline for tabs too
 let g:airline#extensions#tabline#enabled = 1
 
+" ----- airblade/vim-gitgutter settings -----
+" Required after having changed the colorscheme
+hi clear SignColumn
+" In vim-airline, only display "hunks" if the diff is non-zero
+let g:airline#extensions#hunks#non_zero_only = 1
 
 " ----- jistr/vim-nerdtree-tabs -----
 " Open/close NERDTree Tabs with \t
@@ -134,6 +148,7 @@ nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
 " To have NERDTree always open on startup
 let g:nerdtree_tabs_open_on_console_startup = 0
 let NERDTreeIgnore = ['\.pyc$', 'build', 'venv', 'egg', 'egg-info/', 'docs', '\.javac']
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 
 " ----- scrooloose/syntastic settings -----
@@ -165,17 +180,11 @@ let g:easytags_resolve_links = 1
 let g:easytags_suppress_ctags_warning = 1
 
 " ----- majutsushi/tagbar settings -----
-" Open/close tagbar with \b
+" Open/close tagbar with \f
 nmap <silent> <leader>f :TagbarToggle<CR>
 " Uncomment to open tagbar automatically whenever possible
 " autocmd BufEnter * nested :call tagbar#autoopen(0)
 let g:tagbar_autofocus = 1
-
-" ----- airblade/vim-gitgutter settings -----
-" Required after having changed the colorscheme
-hi clear SignColumn
-" In vim-airline, only display "hunks" if the diff is non-zero
-let g:airline#extensions#hunks#non_zero_only = 1
 
 let g:tagbar_type_go = {
 	\ 'ctagstype' : 'go',
@@ -204,7 +213,6 @@ let g:tagbar_type_go = {
 	\ 'ctagsbin'  : 'gotags',
 	\ 'ctagsargs' : '-sort -silent'
 \ }
-
 let g:go_fmt_command = "goimports"
 let g:go_highlight_types = 1
 let g:go_highlight_functions = 1
@@ -212,7 +220,7 @@ let g:go_highlight_functions = 1
 let g:go_highlight_operators = 1
 let g:go_version_warning = 0
 
-" --- ctrlp
+" --- ctrlp ------
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 " --- ctrl + shift + f
@@ -255,14 +263,6 @@ let g:bullets_enabled_file_types = [
 autocmd FileType latex,tex,md,markdown setlocal spell
 autocmd BufRead,BufNewFile *.md setlocal spell
 
-" let Tlist_Highlight_Tag_On_BufEnter = 0
-" let Tlist_Auto_Highlight_Tag = 0
-" let Tlist_Auto_Update = 1
-" let Tlist_Exit_OnlyWindow = 1
-" let Tlist_File_Fold_Auto_Close = 1
-" let Tlist_Use_Right_Window = 1
-" let Tlist_Use_SingleClick = 1
-
 " --- Nerd Commenter ---- 
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
@@ -286,4 +286,20 @@ augroup END
 " ---- Goyo
 "  Activate full screen writing mode toggleable with :Goyo
 
+" --- Limelight: These settings only work with solarize :(
+" Color name (:help cterm-colors) or ANSI code
+" :Limelight to turn on
+" :Limelight! to turn off
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+
+" Color name (:help gui-colors) or RGB color
+let g:limelight_conceal_guifg = 'DarkGray'
+let g:limelight_conceal_guifg = '#777777'
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+" --- tabular
+" :Tabularize /, to align everything in block with ,
+" use case is golang structs or objects.
 
