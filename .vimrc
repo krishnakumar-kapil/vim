@@ -277,11 +277,11 @@ let g:jedi#popup_on_dot = 0
 "  Pencil has :HardPencil and :SoftPencil
 "  SoftPencil is what you want when in markdown without the crappy splits 
 "  and also has nice jumping between lines
-augroup pencil
-  autocmd!
-  autocmd FileType markdown,mkd call pencil#init()
-  autocmd FileType text         call pencil#init()
-augroup END
+" augroup pencil
+  " autocmd!
+  " autocmd FileType markdown,mkd call pencil#init()
+  " autocmd FileType text         call pencil#init()
+" augroup END
 
 " ---- Goyo
 "  Activate full screen writing mode toggleable with :Goyo
