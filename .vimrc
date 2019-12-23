@@ -10,6 +10,7 @@ Plugin 'gmarik/Vundle.vim'
 
 " ----- Making Vim look good ------------------------------------------
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'joshdick/onedark.vim'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
@@ -19,6 +20,9 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'jistr/vim-nerdtree-tabs'
 " rename file name using :rename {newname}
 Plugin 'danro/rename.vim'
+Plugin 'rhysd/vim-clang-format'
+Plugin 'Chiel92/vim-autoformat'
+" Plugin 'Valloric/YouCompleteMe'
 
 " ----- Working with Git ----------------------------------------------
 Plugin 'airblade/vim-gitgutter'
@@ -37,6 +41,7 @@ Plugin 'majutsushi/tagbar'
 
 " ----- Searching ----
 Plugin 'kien/ctrlp.vim'
+Plugin 'wincent/command-t'
 Plugin 'dyng/ctrlsf.vim'
 
 " ----- Language Plugins ----
@@ -44,6 +49,7 @@ Plugin 'fatih/vim-go'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'chrisbra/csv.vim'
 Plugin 'pangloss/vim-javascript'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 
 " ----- Writing -------------
 Plugin 'reedes/vim-pencil'
@@ -51,6 +57,7 @@ Plugin 'junegunn/goyo.vim'
 Plugin 'junegunn/limelight.vim'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'dkarter/bullets.vim'
+
 
 " Multiple Cursor
 " Plugin 'terryma/vim-multiple-cursors'
@@ -83,13 +90,13 @@ syntax on
 set mouse=a
 set expandtab
 set smarttab
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 
 set lbr
 set tw=500
 
-set cc=80
+set cc=100
 
 set autoread
 set pastetoggle=<leader>p
@@ -102,11 +109,15 @@ set undofile
 :command W w
 :command Q q
 
+" remove trailing whitespaces
+autocmd BufWritePre * %s/\s\+$//e
+
 " redraw screen and remove highlighting
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 " ----- Plugin-Specific Settings --------------------------------------
 
 " ---- Airline themes
+" let g:airline_theme='badwolf'
 let g:airline_theme='badwolf'
 "let g:airline_theme='powerlineish'
 " ----- altercation/vim-colors-solarized settings -----
@@ -118,6 +129,7 @@ set background=dark
 
 " Set the colorscheme
 colorscheme solarized
+" colorscheme onedark
 
 " ----- bling/vim-airline settings -----
 " Always show statusbar
@@ -150,6 +162,8 @@ let g:nerdtree_tabs_open_on_console_startup = 0
 let NERDTreeIgnore = ['\.pyc$', 'build', 'venv', 'egg', 'egg-info/', 'docs', '\.javac']
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" cpp highlighting
+let g:cpp_class_decl_highlight = 1
 
 " ----- scrooloose/syntastic settings -----
 let g:syntastic_error_symbol = '✘'
@@ -157,13 +171,17 @@ let g:syntastic_warning_symbol = "▲"
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 augroup mySyntastic
   au!
   au FileType tex let b:syntastic_mode = "passive"
 augroup END
+" let g:syntastic_python_pylint_post_args="--max-line-length=100"
+" let g:syntastic_python_checkers=['python', 'flake8']
+" let g:syntastic_python_flake8_args='--ignore=E501,E225'
+" let g:syntastic_python_pylint_post_args="--max-line-length=100"
 
-let g:syntax_matlab_mlint_exec="/Applications/MATLAB_R2016b.app/bin/maci64/mlint"
+" let g:syntax_matlab_mlint_exec="/Applications/MATLAB_R2016b.app/bin/maci64/mlint"
 
 " -- Autosave settings
 " do not change the 'updatetime' option"
@@ -222,16 +240,22 @@ let g:go_version_warning = 0
 
 " --- ctrlp ------
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_root_markers = ['.ctrlp']
+" let g:ctrlp_working_path_mode = 'r'
+" let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
+                          " \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
+let g:ctrlp_extensions = ['tag']
+nnoremap <C-o> :CtrlPTag<CR>
 
 " --- ctrl + shift + f
-nmap     <C-F>f <Plug>CtrlSFPrompt
-vmap     <C-F>f <Plug>CtrlSFVwordPath
-vmap     <C-F>F <Plug>CtrlSFVwordExec
-nmap     <C-F>n <Plug>CtrlSFCwordPath
-nmap     <C-F>p <Plug>CtrlSFPwordPath
-nnoremap <C-F>o :CtrlSFOpen<CR>
-nnoremap <C-F>t :CtrlSFToggle<CR>
-inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
+" nmap     <C-F>f <Plug>CtrlSFPrompt
+" vmap     <C-F>f <Plug>CtrlSFVwordPath
+" vmap     <C-F>F <Plug>CtrlSFVwordExec
+" nmap     <C-F>n <Plug>CtrlSFCwordPath
+" nmap     <C-F>p <Plug>CtrlSFPwordPath
+" nnoremap <C-F>o :CtrlSFOpen<CR>
+" nnoremap <C-F>t :CtrlSFToggle<CR>
+" inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 
 " ----- Raimondi/delimitMate settings -----
 let delimitMate_expand_cr = 1
@@ -263,7 +287,7 @@ let g:bullets_enabled_file_types = [
 autocmd FileType latex,tex,md,markdown setlocal spell
 autocmd BufRead,BufNewFile *.md setlocal spell
 
-" --- Nerd Commenter ---- 
+" --- Nerd Commenter ----
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
 let g:NERDCommentEmptyLines = 1
@@ -275,7 +299,7 @@ let g:jedi#popup_on_dot = 0
 
 " ---- vim-pencil
 "  Pencil has :HardPencil and :SoftPencil
-"  SoftPencil is what you want when in markdown without the crappy splits 
+"  SoftPencil is what you want when in markdown without the crappy splits
 "  and also has nice jumping between lines
 " augroup pencil
   " autocmd!
@@ -303,3 +327,28 @@ autocmd! User GoyoLeave Limelight!
 " :Tabularize /, to align everything in block with ,
 " use case is golang structs or objects.
 
+
+nmap <C-_> <Plug>NERDCommenterToggle
+vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
+nmap <leader>c <Plug>NERDCommenterToggle
+vmap <leader>c <Plug>NERDCommenterToggle<CR>gv
+
+" map <C-F> :py3file /usr/local/Cellar/clang-format/2018-08-24/share/clang/clang-format.py<cr>
+" imap <C-F><c-o>:py3file /usr/local/Cellar/clang-format/2018-08-24/share/clang/clang-format.py<cr>
+noremap <C-F> :Autoformat<CR>
+
+
+let g:clang_format#style_options = {
+            \ "AccessModifierOffset" : -4,
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AlwaysBreakTemplateDeclarations" : "true",
+            \ "Standard" : "C++11"}
+
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+nmap <Leader>C :ClangFormatAutoToggle<CR>
+autocmd FileType c ClangFormatAutoEnable
